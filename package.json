@@ -1,0 +1,31 @@
+{
+  "name": "bilibili-live",
+  "version": "1.0.5",
+  "description": "A Node Toolkit for bilibili live service",
+  "main": "dist/bilibili-live.js",
+  "module": "dist/bilibili-live.esm.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build:cjs": "rollup ./src/index.js --output.format cjs --output.file ./dist/bilibili-live.js",
+    "build:es": "rollup ./src/index.js --output.format es --output.file ./dist/bilibili-live.esm.js",
+    "test:user": "node ./test/user.js",
+    "test:room": "node --inspect ./test/room.js",
+    "test:api": "node ./test/api.js",
+    "test:action": "node --inspect ./test/action.js"
+  },
+  "author": "pandaGao <me@pandagao.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "ws": "^3.0.0"
+  },
+  "devDependencies": {
+    "rollup": "^0.48.2",
+    "rollup-plugin-commonjs": "^8.2.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pandaGao/bilibili-live"
+  }
+}
