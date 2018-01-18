@@ -13,10 +13,8 @@ function initRoom (url) {
         console.log('成功连接至弹幕服务器')
       })
       .on('danmaku.message', (msg) => {
-        if(msg.type != 'online')
-          console.log(msg)
+        console.log(msg)
         count += 1
-        //console.log(count)
       })
       .on('danmaku.close', () => {
         console.log('已断开与弹幕服务器的连接')
@@ -36,8 +34,4 @@ function initRoom (url) {
   })
 }
 
-initRoom(4928767)
-//setTimeout(() => {
-//  LiveRoom.disconnect()
-//  initRoom(92052)
-//}, 5000)
+initRoom(388)

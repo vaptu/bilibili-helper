@@ -49,3 +49,7 @@ jspm_packages
 .env
 
 dist
+test/dict.js
+*.swp
+resources/video/*
+.DS_Store

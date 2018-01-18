@@ -16,6 +16,7 @@
   "author": "pandaGao <me@pandagao.com>",
   "license": "MIT",
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "lodash": "^4.17.4",
     "ws": "^3.0.0"
   },
