@@ -1,6 +1,9 @@
 var ffmpeg = require('fluent-ffmpeg');
 var _ = require('lodash');
 var path = require('path');
+var fs = require('fs');
+var colors = require('colors');
+import logging from '../../utils/log.js'
 
 export default class Media{
   constructor(config={}){
@@ -11,14 +14,21 @@ export default class Media{
 
   // 参数验证
   validate(){
-    if(!this.config.rtmp_path)
+    logging.debug('asdasd')
+    if(!this.config.rtmp_path){
+      logging.error('未配置直播间地址rtmp域名');
       return '请配置直播间地址rtmp_path';
+    }
 
-    if(!this.config.rtmp_code)
+    if(!this.config.rtmp_code){
+      logging.error('未配置直播间地址rtmp code');
       return '请配置直播间rtmp_code';
+    }
 
-    if(!this.config.playlist || this.config.playlist.length == 0)
-      return '播放列表为空或不存在'
+    if(!this.config.playlist){
+      logging.debug('使用默认播放列表');
+      this.config.playlist = path.resolve('config/playlist.json');
+    }
 
     return true;
   }
@@ -44,16 +54,16 @@ export default class Media{
          .format('flv')
          .on('start', function(commandLine){
            that.current_media = item;
-           console.log('正在播放: ' + item)
+           logging.info('正在播放: ' + item)
          })
          .on('error', function(err, stdout, stderr){
-           console.log(err.message);
-           console.log(stdout);
-           console.log(stderr);
+           logging.error(err.message);
+           logging.debug(stdout);
+           logging.debug(stderr);
            resolve();
          })
          .on('end', function(){
-           console.log(item + ' play end.')
+           logging.info(item + ' play end.')
            resolve();
          })
          .output(outputPath, { end: true})
@@ -62,11 +72,23 @@ export default class Media{
     }
 
     do{
-      for(var x in this.config.playlist){
-        await playitem(this.config.playlist[x]);
+      try{
+        var buf = JSON.parse(fs.readFileSync( this.config.playlist, 'utf-8' ));
+        if(buf.length == 0){
+          logging.error('播放列表为空'.warn);
+          break;
+        }
+      }catch(e){
+        logging.debug(e);
+        logging.error('播放列表JSON解析失败'.red);
+        break;
+      }
+      for(var x in buf){
+        await playitem(buf[x]);
       }
     }while(loop)
 
+    logging.info('播放结束');
     return {status: true, message: '播放结束'};
   }
 }

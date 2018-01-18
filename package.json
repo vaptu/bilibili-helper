@@ -16,8 +16,10 @@
   "author": "pandaGao <me@pandagao.com>",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.1.2",
     "fluent-ffmpeg": "^2.1.2",
     "lodash": "^4.17.4",
+    "log4js": "^2.5.1",
     "ws": "^3.0.0"
   },
   "devDependencies": {
