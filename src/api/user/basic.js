@@ -4,7 +4,7 @@ export function checkUserLogin () {
     uri: 'User/getUserInfo'
   }).then(res => {
     let data = JSON.parse(res)
-    if (data.code == 'REPONSE_OK') {
+    if (data.code == '0') {
       return true
     }
     return false
